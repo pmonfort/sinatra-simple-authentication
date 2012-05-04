@@ -14,7 +14,10 @@ Gem::Specification.new do |s|
   s.platform      = Gem::Platform::RUBY
 
   s.add_dependency "haml"
-  s.add_dependency "sequel"
+  s.add_dependency "mysql2"
+  s.add_dependency "dm-core"
+  s.add_dependency "dm-validations"
+  s.add_dependency "dm-mysql-adapter"
   s.add_dependency "sinatra"
   s.add_dependency "sinatra-contrib"
   #s.add_development_dependency "rspec"

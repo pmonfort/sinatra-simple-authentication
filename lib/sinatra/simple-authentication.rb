@@ -1,5 +1,5 @@
 require "rubygems"
-require "sequel"
+require "dm-core"
 require 'haml'
 require 'sinatra/base'
 require 'sinatra/config_file'
@@ -57,11 +57,9 @@ module Sinatra
         @user.password = params[:password]
         @user.password_confirmation = params[:password_confirmation]
 
-        begin
-          raise 'Invalid model' unless @user.valid?
-          @user.save
+        if @user.save
           redirect '/admin'
-        rescue => e
+        else
           @password_confirmation = settings.simple_authorization["password_confirmation"]
           @errors = @user.errors
           haml :"signup"
