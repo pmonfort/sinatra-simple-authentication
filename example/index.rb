@@ -14,7 +14,6 @@ class Index < Sinatra::Base
 
   get '/' do
     login_required
-    flash[:notice] = "Thanks for signing up!"
     haml :'/home'
   end
 end

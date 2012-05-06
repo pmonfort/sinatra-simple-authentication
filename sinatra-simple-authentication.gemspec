@@ -14,25 +14,21 @@ Gem::Specification.new do |s|
   s.platform      = Gem::Platform::RUBY
 
   s.add_dependency "haml"
-  s.add_dependency "mysql2"
   s.add_dependency "dm-core"
   s.add_dependency "dm-validations"
   s.add_dependency "dm-migrations"
   s.add_dependency "dm-mysql-adapter"
   s.add_dependency "sinatra"
-  s.add_dependency "sinatra-contrib"
   #s.add_development_dependency "rspec"
 
   #s.rubyforge_project = "lorem"
 
   s.files = [
       "lib/sinatra/models/user.rb",
-      "lib/sinatra/views/layout.haml",
       "lib/sinatra/views/login.haml",
       "lib/sinatra/views/signup.haml",
       "lib/sinatra/views/_form.haml",
-      "lib/sinatra/simple-authentication.rb",
-      "sinatra-simple-authentication.gemspec"
+      "lib/sinatra/simple-authentication.rb"
     ]
 
   #s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

@@ -3,7 +3,6 @@ require "dm-core"
 require 'dm-migrations'
 require 'haml'
 require 'sinatra/base'
-require 'sinatra/content_for'
 require_relative 'models/user'
 
 module Sinatra
@@ -53,7 +52,6 @@ module Sinatra
 
     def self.registered(app)
       app.helpers SimpleAuthentication::Helpers
-      app.helpers Sinatra::ContentFor
       app.set self::DEFAULTS
       app.enable :sessions
       app.set :sinatra_authentication_view_path, File.expand_path('../views/', __FILE__)

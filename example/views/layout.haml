@@ -1,8 +1,6 @@
 !!!
 %html
   %head
-    %link{ :href => "/style/general.css", :rel => "stylesheet", :type => "text/css" }
-    = yield_content :scripts_and_styles
   %body
     - if Rack.const_defined?('Flash') && flash[:notice]
       = flash[:notice]

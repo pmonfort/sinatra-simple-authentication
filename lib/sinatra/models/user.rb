@@ -17,19 +17,6 @@ class User
 
   validates_confirmation_of :password
 
-  # def validate
-  #   super
-  #   Sequel::Plugins::ValidationHelpers::DEFAULT_OPTIONS.merge!(:presence=>{:message=>'cannot be empty'})
-
-  #   email_regexp = /(\A(\s*)\Z)|(\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z)/i
-
-  #   validates_presence :email
-  #   validates_presence :password_hashed if new?
-  #   validates_format email_regexp, :email
-  #   validates_unique :email
-  #   errors.add :passwords, ' don\'t match' unless @password == @password_confirmation_auR
-  # end
-
   def password=(pass)
     @password = pass
     if !pass.strip.empty?

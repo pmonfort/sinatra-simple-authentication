@@ -4,3 +4,4 @@ gem 'haml'
 gem 'dm-core'
 gem 'sinatra'
 gem 'sinatra-simple-authentication'
+gem "rack-flash3", "~> 1.0.1"
