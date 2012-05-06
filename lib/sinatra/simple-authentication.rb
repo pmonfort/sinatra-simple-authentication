@@ -1,5 +1,6 @@
 require "rubygems"
 require "dm-core"
+require 'dm-migrations'
 require 'haml'
 require 'sinatra/base'
 require 'sinatra/content_for'
@@ -56,6 +57,8 @@ module Sinatra
       app.set self::DEFAULTS
       app.enable :sessions
       app.set :sinatra_authentication_view_path, File.expand_path('../views/', __FILE__)
+
+      User.auto_upgrade!
 
       app.get "/signup" do
         @password_confirmation = settings.use_password_confirmation
@@ -119,6 +122,4 @@ module Sinatra
       end
     end
   end
-
-  register SimpleAuthentication
 end
