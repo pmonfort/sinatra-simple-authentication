@@ -1,0 +1,6 @@
+source 'http://rubygems.org'
+
+gem 'haml'
+gem 'dm-core'
+gem 'sinatra'
+gem 'sinatra-simple-authentication'

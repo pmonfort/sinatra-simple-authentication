@@ -2,7 +2,6 @@ require "rubygems"
 require "dm-core"
 require 'haml'
 require 'sinatra/base'
-require 'sinatra/config_file'
 require 'sinatra/content_for'
 require_relative 'models/user'
 
@@ -25,7 +24,7 @@ module Sinatra
 
       def current_user
         if !!session[:user]
-          User.get(:id => session[:user])
+          User.first(:id => session[:user])
         else
           return false
         end
@@ -47,15 +46,19 @@ module Sinatra
       end
     end
 
+    DEFAULTS = {
+      :use_password_confirmation => true
+    }
+
     def self.registered(app)
       app.helpers SimpleAuthentication::Helpers
       app.helpers Sinatra::ContentFor
-      app.register Sinatra::ConfigFile
-      app.config_file 'settings.yml'
+      app.set self::DEFAULTS
+      app.enable :sessions
       app.set :sinatra_authentication_view_path, File.expand_path('../views/', __FILE__)
 
       app.get "/signup" do
-        @password_confirmation = settings.simple_authorization["password_confirmation"]
+        @password_confirmation = settings.use_password_confirmation
         @user = User.new
         @actionUrl = ""
         haml get_view_as_string("signup.haml")
@@ -68,9 +71,9 @@ module Sinatra
         @user.password_confirmation = params[:password_confirmation]
 
         if @user.save
-          redirect '/admin'
+          redirect '/'
         else
-          @password_confirmation = settings.simple_authorization["password_confirmation"]
+          @password_confirmation = settings.use_password_confirmation
           @errors = @user.errors
           haml get_view_as_string("signup.haml")
         end
