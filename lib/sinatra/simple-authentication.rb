@@ -4,7 +4,6 @@ require 'haml'
 require 'sinatra/base'
 require 'sinatra/config_file'
 require 'sinatra/content_for'
-#require File.expand_path("../models/user", __FILE__)
 require_relative 'models/user'
 
 module Sinatra
@@ -35,6 +34,17 @@ module Sinatra
       def logged_in?
         !!session[:user]
       end
+
+      #BECAUSE sinatra 9.1.1 can't load views from different paths properly
+      def get_view_as_string(filename)
+        view = File.join(options.sinatra_authentication_view_path, filename)
+        data = ""
+        f = File.open(view, "r")
+        f.each_line do |line|
+          data += line
+        end
+        return data
+      end
     end
 
     def self.registered(app)
@@ -42,13 +52,13 @@ module Sinatra
       app.helpers Sinatra::ContentFor
       app.register Sinatra::ConfigFile
       app.config_file 'settings.yml'
+      app.set :sinatra_authentication_view_path, File.expand_path('../views/', __FILE__)
 
       app.get "/signup" do
         @password_confirmation = settings.simple_authorization["password_confirmation"]
         @user = User.new
-        #@actionUrl = "#{settings.simple_authorization["base_url"]}/signup"
         @actionUrl = ""
-        haml :"signup"
+        haml get_view_as_string("signup.haml")
       end
 
       app.post "/signup" do
@@ -62,7 +72,7 @@ module Sinatra
         else
           @password_confirmation = settings.simple_authorization["password_confirmation"]
           @errors = @user.errors
-          haml :"signup"
+          haml get_view_as_string("signup.haml")
         end
       end
 
@@ -70,7 +80,7 @@ module Sinatra
         if !!session[:user]
           redirect '/'
         else
-          haml :"login"
+          haml get_view_as_string("login.haml")
         end
       end
 
