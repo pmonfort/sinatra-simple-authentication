@@ -6,9 +6,4 @@
   %body
     - if Rack.const_defined?('Flash') && flash[:notice]
       = flash[:notice]
-    - if defined?(@errors) && !@errors.empty?
-      %div{:class => "error"}
-        - @errors.full_messages.each do |error|
-          %span "#{error}"
-        %div{:class => "clear"}
     = yield

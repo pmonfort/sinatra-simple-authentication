@@ -77,7 +77,11 @@ module Sinatra
           redirect '/'
         else
           @password_confirmation = settings.use_password_confirmation
-          @errors = @user.errors
+          if Rack.const_defined?('Flash')
+            flash[:notice] = @user.errors
+          end
+
+          #@errors = @user.errors
           haml get_view_as_string("signup.haml")
         end
       end
