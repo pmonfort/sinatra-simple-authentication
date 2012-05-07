@@ -92,26 +92,32 @@ module Sinatra
       end
 
       app.post "/login" do
-        if user = User.authenticate(params[:email], params[:password])
-          session[:user] = user.id
+        if user = User.first(:email => params[:email])
+          if user.authenticate(params[:password])
+            session[:user] = user.id
 
-          if Rack.const_defined?('Flash')
-            flash[:notice] = ["Login successful."]
-          end
+            if Rack.const_defined?('Flash')
+              flash[:notice] = ["Login successful."]
+            end
 
-          if !!session[:return_to]
-            redirect_url = session[:return_to]
-            session[:return_to] = false
-            redirect redirect_url
+            if !!session[:return_to]
+              redirect_url = session[:return_to]
+              session[:return_to] = false
+              redirect redirect_url
+            else
+              redirect '/'
+            end
           else
-            redirect '/'
+            if Rack.const_defined?('Flash')
+              flash[:error] = ["The password you entered is incorrect."]
+            end
           end
         else
           if Rack.const_defined?('Flash')
-            flash[:error] = ["The email or password you entered is incorrect."]
+            flash[:error] = ["The email you entered is incorrect."]
           end
-          redirect '/login'
         end
+        redirect '/login'
       end
 
       app.get '/logout' do

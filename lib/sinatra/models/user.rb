@@ -21,7 +21,7 @@ class User
     if !pass.strip.empty?
       @password = pass
       self.salt = generate_salt unless self.salt
-      self.password_hashed = User.encrypt(pass, self.salt)
+      self.password_hashed = encrypt(pass, self.salt)
     end
   end
 
@@ -29,15 +29,12 @@ class User
     (0..25).inject('') { |r, i| r << rand(93) + 33 }
   end
 
-  def self.encrypt(password, salt)
+  def encrypt(password, salt)
     Digest::SHA1.hexdigest(password + salt)
   end
 
-  def self.authenticate(email, pass)
-    current_user = User.first(:email => email)
-    return nil if current_user.nil?
-    return current_user if self.encrypt(pass, current_user.salt) == current_user.password_hashed
-    nil
+  def authenticate(pass)
+    encrypt(pass, self.salt) == self.password_hashed
   end
 
   def check_password
