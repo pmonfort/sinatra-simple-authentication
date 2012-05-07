@@ -9,17 +9,17 @@ class User
 
   property :id,               Serial
   property :email,            String, :required => true
-  property :password_hashed,  String, :required => true
-  property :salt,             String, :required => true
+  property :password_hashed,  String
+  property :salt,             String
 
   validates_uniqueness_of :email
   validates_format_of :email, :as => :email_address
-
+  validates_with_method :check_password
   validates_confirmation_of :password
 
   def password=(pass)
-    @password = pass
     if !pass.strip.empty?
+      @password = pass
       self.salt = generate_salt unless self.salt
       self.password_hashed = User.encrypt(pass, self.salt)
     end
@@ -38,5 +38,13 @@ class User
     return nil if current_user.nil?
     return current_user if self.encrypt(pass, current_user.salt) == current_user.password_hashed
     nil
+  end
+
+  def check_password
+    if @password
+      return true
+    else
+      [false, 'Password must not be blank']
+    end
   end
 end

@@ -76,10 +76,9 @@ module Sinatra
         else
           @password_confirmation = settings.use_password_confirmation
           if Rack.const_defined?('Flash')
-            flash[:notice] = @user.errors
+            flash[:error] = @user.errors.full_messages
           end
 
-          #@errors = @user.errors
           haml get_view_as_string("signup.haml")
         end
       end
@@ -97,7 +96,7 @@ module Sinatra
           session[:user] = user.id
 
           if Rack.const_defined?('Flash')
-            flash[:notice] = "Login successful."
+            flash[:notice] = ["Login successful."]
           end
 
           if !!session[:return_to]
@@ -109,7 +108,7 @@ module Sinatra
           end
         else
           if Rack.const_defined?('Flash')
-            flash[:notice] = "The email or password you entered is incorrect."
+            flash[:error] = ["The email or password you entered is incorrect."]
           end
           redirect '/login'
         end
@@ -117,9 +116,6 @@ module Sinatra
 
       app.get '/logout' do
         session[:user] = nil
-        if Rack.const_defined?('Flash')
-          flash[:notice] = "Logout successful."
-        end
         redirect '/'
       end
     end
