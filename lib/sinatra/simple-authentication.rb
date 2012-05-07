@@ -1,5 +1,4 @@
 require "rubygems"
-require "dm-core"
 require 'dm-migrations'
 require 'haml'
 require 'sinatra/base'

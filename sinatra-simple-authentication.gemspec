@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   s.add_dependency "dm-core"
   s.add_dependency "dm-validations"
   s.add_dependency "dm-migrations"
-  s.add_dependency "dm-mysql-adapter"
   s.add_dependency "sinatra"
   #s.add_development_dependency "rspec"
 
