@@ -2,6 +2,7 @@ require 'rubygems'
 require 'dm-core'
 require 'dm-validations'
 require 'digest'
+require 'dm-migrations'
 
 class User
   include DataMapper::Resource
@@ -45,3 +46,5 @@ class User
     end
   end
 end
+
+User.auto_upgrade!

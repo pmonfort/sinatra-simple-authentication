@@ -1,8 +1,6 @@
 require "rubygems"
-require 'dm-migrations'
 require 'haml'
 require 'sinatra/base'
-require_relative 'models/user'
 
 module Sinatra
   module SimpleAuthentication
@@ -50,12 +48,11 @@ module Sinatra
     }
 
     def self.registered(app)
+      require_relative 'models/user'
       app.helpers SimpleAuthentication::Helpers
       app.set self::DEFAULTS
       app.enable :sessions
       app.set :sinatra_authentication_view_path, File.expand_path('../views/', __FILE__)
-
-      User.auto_upgrade!
 
       app.get "/signup" do
         @password_confirmation = settings.use_password_confirmation
