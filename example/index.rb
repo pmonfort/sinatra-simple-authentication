@@ -10,8 +10,14 @@ class Index < Sinatra::Base
 
   use Rack::Flash, :sweep => true
 
+  #Setup optional settings
+  Sinatra::SimpleAuthentication.configure do |c|
+    c.use_password_confirmation = false
+    c.min_password_length = 4
+    c.max_password_length = 16
+  end
+
   register Sinatra::SimpleAuthentication
-  set :use_password_confirmation, true
 
   get '/' do
     login_required

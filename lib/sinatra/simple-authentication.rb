@@ -43,16 +43,27 @@ module Sinatra
       end
     end
 
-    DEFAULTS = {
-      :use_password_confirmation => true
-    }
+    class << self
+      attr_accessor :use_password_confirmation, :min_password_length, :max_password_length
+    end
+
+    def self.configure(&block)
+      yield self
+    end
 
     def self.registered(app)
       require_relative 'models/user'
       app.helpers SimpleAuthentication::Helpers
-      app.set self::DEFAULTS
-      app.enable :sessions
+
+      app.set :use_password_confirmation, !use_password_confirmation.nil? ? use_password_confirmation : true
+      app.set :min_password_length, !min_password_length.nil? ? min_password_length : 4
+      app.set :max_password_length, !max_password_length.nil? ? max_password_length : 16
+
       app.set :sinatra_authentication_view_path, File.expand_path('../views/', __FILE__)
+      app.enable :sessions
+
+      User.settings = app.settings
+      User.set_validation_rules
 
       app.get "/signup" do
         @password_confirmation = settings.use_password_confirmation

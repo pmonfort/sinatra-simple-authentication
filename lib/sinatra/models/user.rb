@@ -1,8 +1,8 @@
 require 'rubygems'
 require 'dm-core'
 require 'dm-validations'
-require 'digest'
 require 'dm-migrations'
+require 'digest'
 
 class User
   include DataMapper::Resource
@@ -13,10 +13,20 @@ class User
   property :password_hashed,  String
   property :salt,             String
 
-  validates_uniqueness_of :email
-  validates_format_of :email, :as => :email_address
-  validates_with_method :check_password
-  validates_confirmation_of :password
+  class << self
+    attr_accessor :settings
+  end
+
+  def self.set_validation_rules
+    validates_uniqueness_of :email
+    validates_format_of :email, :as => :email_address
+    validates_with_method :check_password
+    validates_length_of :password, :min => self.settings.min_password_length, :max => self.settings.max_password_length
+
+    if self.settings.use_password_confirmation
+      validates_confirmation_of :password
+    end
+  end
 
   def password=(pass)
     if !pass.strip.empty?
