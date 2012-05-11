@@ -1,6 +1,6 @@
 # Sinatra::Simple::Authentication
 
-TODO: Write a gem description
+Is a basic authentication gem, with support for Datamapper
 
 ## Installation
 
@@ -15,6 +15,13 @@ Or install it yourself as:
 ## Usage
 
 TODO: Write usage instructions here
+
+## Requirements
+* sinatra
+* haml
+* dm-core
+* dm-validations
+* dm-migrations
 
 ## Contributing
 
