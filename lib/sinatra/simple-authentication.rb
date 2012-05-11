@@ -69,7 +69,13 @@ module Sinatra
         @password_confirmation = settings.use_password_confirmation
         @user = User.new
         @actionUrl = ""
-        haml get_view_as_string("signup.haml")
+
+        #Try to load an user view otherwise load the default
+        begin
+          haml :"/signup"
+        rescue
+          haml get_view_as_string("signup.haml")
+        end
       end
 
       app.post "/signup" do
@@ -86,7 +92,12 @@ module Sinatra
             flash[:error] = @user.errors.full_messages
           end
 
-          haml get_view_as_string("signup.haml")
+          #Try to load an user view otherwise load the default
+          begin
+            haml :"/signup"
+          rescue
+            haml get_view_as_string("signup.haml")
+          end
         end
       end
 
@@ -94,7 +105,12 @@ module Sinatra
         if !!session[:user]
           redirect '/'
         else
-          haml get_view_as_string("login.haml")
+          #Try to load an user view otherwise load the default
+          begin
+            haml :"/login"
+          rescue
+            haml get_view_as_string("login.haml")
+          end
         end
       end
 
