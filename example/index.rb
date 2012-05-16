@@ -6,7 +6,7 @@ require 'rack-flash'
 
 class Index < Sinatra::Base
   DataMapper::Logger.new($stdout, :debug)
-  DataMapper.setup(:default, 'mysql://' + "USERNAME" + ":" + "PASSWORD" + "@" + "HOST" + "/" + "DATABASE")
+  DataMapper.setup(:default, "sqlite://#{Dir.pwd}/example.db")
 
   use Rack::Flash, :sweep => true
 

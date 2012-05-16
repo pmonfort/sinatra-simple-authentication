@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'haml'
 gem 'dm-core'
-gem 'dm-mysql-adapter'
+gem 'dm-sqlite-adapter'
 gem 'sinatra'
 gem 'sinatra-simple-authentication'
 gem "rack-flash3", "~> 1.0.1"
