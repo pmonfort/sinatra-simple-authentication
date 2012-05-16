@@ -2,19 +2,14 @@ require 'rubygems'
 require 'sinatra/base'
 require 'test/unit'
 require 'rack/test'
-
-ENV['RACK_ENV'] = 'test'
-
 require 'dm-core'
 require 'sinatra/simple-authentication'
-#require 'rack-flash'
-
-DataMapper::Logger.new($stdout, :debug)
-DataMapper.setup(:default, 'mysql://' + "USERNAME" + ":" + "PASSWORD" + "@" + "HOST" + "/" + "DATABASE")
 
 module Sinatra
   class Base
     set :environment, :test
+    DataMapper::Logger.new($stdout, :debug)
+    DataMapper.setup(:default, "sqlite://#{Dir.pwd}/test.db")
     register Sinatra::SimpleAuthentication
   end
 end
@@ -26,14 +21,14 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     Sinatra::Application
   end
 
-  def test_sign_up
+  def test_routes
     get '/signup'
     assert last_response.ok?
-    assert true
-  end
 
-  def test_int
-    assert false
-  end
+    get '/login'
+    assert last_response.ok?
 
+    get '/logout'
+    assert last_response.ok?
+  end
 end

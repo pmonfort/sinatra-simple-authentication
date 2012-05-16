@@ -1,6 +1,6 @@
 # Sinatra::Simple::Authentication
 
-Is a basic authentication gem, with support for Datamapper
+Basic authentication gem, with support for Datamapper
 
 ## Installation
 

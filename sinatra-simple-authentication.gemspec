@@ -18,7 +18,8 @@ Gem::Specification.new do |s|
   s.add_dependency "dm-validations"
   s.add_dependency "dm-migrations"
   s.add_dependency "sinatra"
-  #s.add_development_dependency "rspec"
+  s.add_development_dependency "dm-sqlite-adapter"
+  s.add_development_dependency "rack-test"
 
   #s.rubyforge_project = "lorem"
 
@@ -30,6 +31,6 @@ Gem::Specification.new do |s|
       "lib/sinatra/simple-authentication.rb"
     ]
 
-  #s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.test_files    = Dir.glob('test/simple_authentication_test.rb')
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
 end
