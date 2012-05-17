@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency "dm-migrations"
   s.add_dependency "sinatra"
   s.add_development_dependency "dm-sqlite-adapter"
+  s.add_development_dependency "nokogiri"
   s.add_development_dependency "rack-test"
 
   #s.rubyforge_project = "lorem"
