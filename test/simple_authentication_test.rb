@@ -11,6 +11,7 @@ module Sinatra
     set :environment, :test
     DataMapper::Logger.new($stdout, :debug)
     DataMapper.setup(:default, "sqlite://#{Dir.pwd}/test.db")
+    DataMapper.logger.flush
     register Sinatra::SimpleAuthentication
   end
 end
@@ -20,6 +21,10 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
 
   def app
     Sinatra::Application
+  end
+
+  def teardown
+    User.all.destroy
   end
 
   def test_signup_page
@@ -39,36 +44,32 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     html = Nokogiri::HTML(last_response.body)
     assert html.css('[name="email"]')
     assert html.css('[name="password"]')
-
-    #get '/logout'
-    #assert last_response.ok?
   end
 
   def test_user_validations
     user = User.new
     assert !user.save
-
     assert user.errors.include?(["Email must not be blank"])
     assert user.errors.include?(["Password must not be blank"])
     assert user.errors.include?(["Password must be between 4 and 16 characters long"])
 
     #Short password
     user = User.new
-    user.password = "tt"
+    user.password = "X" * 3
     assert !user.save
     assert user.errors.include?(["Password must be between 4 and 16 characters long", "Password does not match the confirmation"])
     assert user.errors.include?(["Email must not be blank"])
 
     #Long password
     user = User.new
-    user.password = "tttttttttttttttttttttttttttt"
+    user.password = "X" * 17
     assert !user.save
     assert user.errors.include?(["Password must be between 4 and 16 characters long", "Password does not match the confirmation"])
     assert user.errors.include?(["Email must not be blank"])
 
     #Wrong format email
     user = User.new
-    user.email = "tttttttttttttt"
+    user.email = "InvaidEmailFormat"
     assert !user.save
     assert user.errors.include?(["Email has an invalid format"])
     assert user.errors.include?(["Password must not be blank"])
