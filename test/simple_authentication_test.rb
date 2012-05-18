@@ -11,7 +11,6 @@ module Sinatra
     set :environment, :test
     DataMapper::Logger.new($stdout, :debug)
     DataMapper.setup(:default, "sqlite://#{Dir.pwd}/test.db")
-    DataMapper.logger.flush
     register Sinatra::SimpleAuthentication
   end
 end
