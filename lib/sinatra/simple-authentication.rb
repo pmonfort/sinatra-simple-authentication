@@ -52,7 +52,7 @@ module Sinatra
     end
 
     def self.registered(app)
-      require_relative 'models/user'
+      require_relative 'models/abstract_user'
       app.helpers SimpleAuthentication::Helpers
 
       app.set :use_password_confirmation, !use_password_confirmation.nil? ? use_password_confirmation : true
