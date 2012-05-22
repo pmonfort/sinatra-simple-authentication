@@ -45,37 +45,51 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
   end
 
   def test_user_validations
+    taken_email = "Email is already been taken."
+    missing_email = "Email can't be blank."
+    invalid_email = "Email invalid format."
+    missing_password = "Password can't be blank."
+    short_password = "Password is too short, must be between 4 and 16 characters long."
+    long_password = "Password is too long, must be between 4 and 16 characters long."
+    missing_password_confirmation = "Password confirmation can't be blank."
+    password_confirmation_dont_match_password = "Password confirmation don't match password."
+
+    #Empty user
     user = User.new
 
     assert !user.save
-#    assert user.errors.include?(["Email must not be blank"])
-#    assert user.errors.include?(["Password must not be blank"])
-#    assert user.errors.include?(["Password must be between 4 and 16 characters long"])
+    assert user.errors[:email].include?(missing_email)
+    assert user.errors[:password].include?(missing_password)
+    assert user.errors[:password].include?(short_password)
+    assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Short password
     user = User.new
     user.password = "X" * 3
-    assert !user.save
 
-#    assert user.errors.include?(["Password must be between 4 and 16 characters long", "Password does not match the confirmation"])
-#    assert user.errors.include?(["Email must not be blank"])
+    assert !user.save
+    assert user.errors[:email].include?(missing_email)
+    assert user.errors[:password].include?(short_password)
+    assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Long password
     user = User.new
     user.password = "X" * 17
-    assert !user.save
 
-#    assert user.errors.include?(["Password must be between 4 and 16 characters long", "Password does not match the confirmation"])
-#    assert user.errors.include?(["Email must not be blank"])
+    assert !user.save
+    assert user.errors[:email].include?(missing_email)
+    assert user.errors[:password].include?(long_password)
+    assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Wrong format email
     user = User.new
     user.email = "InvaidEmailFormat"
-    assert !user.save
 
-#    assert user.errors.include?(["Email has an invalid format"])
-#    assert user.errors.include?(["Password must not be blank"])
-#    assert user.errors.include?(["Password must be between 4 and 16 characters long"])
+    assert !user.save
+    assert user.errors[:email].include?(invalid_email)
+    assert user.errors[:password].include?(missing_password)
+    assert user.errors[:password].include?(short_password)
+    assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Valid user
     user = User.new
@@ -83,5 +97,14 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     user.password = "PASSWORD"
     user.password_confirmation = "PASSWORD"
     assert user.save
+
+    #User duplicated email
+    user = User.new
+    user.email = "test@mail.com"
+    user.password = "PASSWORD"
+    user.password_confirmation = "PASSWORD"
+
+    assert !user.save
+    assert user.errors[:email].include?(taken_email)
   end
 end
