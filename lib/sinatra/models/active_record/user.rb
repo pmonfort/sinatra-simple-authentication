@@ -26,5 +26,5 @@ unless ActiveRecord::Base.connection.table_exists?("users")
 end
 
 class User < ActiveRecord::Base
-  include ArAdapter
+  include ActiveRecord::Adapter
 end

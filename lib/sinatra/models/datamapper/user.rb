@@ -7,7 +7,7 @@ require File.join(File.expand_path("..", __FILE__), 'adapter')
 
 class User
   include DataMapper::Resource
-  include DmAdapter
+  include DataMapper::Adapter
 end
 
 User.auto_upgrade!
