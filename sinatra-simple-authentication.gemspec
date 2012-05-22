@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
       "lib/sinatra/models/datamapper/user.rb",
       "lib/sinatra/models/datamapper/adapter.rb",
       "lib/sinatra/models/active_record/user.rb",
+      "lib/sinatra/models/active_record/adapter.rb",
       "lib/sinatra/views/login.haml",
       "lib/sinatra/views/signup.haml",
       "lib/sinatra/views/_form.haml",
