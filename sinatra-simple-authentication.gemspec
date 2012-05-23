@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email         = ["pmonfort@gmail.com"]
   s.description   = %q{Simple authentication plugin for sinatra.}
   s.summary       = %q{Simple authentication plugin for sinatra.}
-  s.homepage      = ""
+  s.homepage      = "https://github.com/pmonfort/sinatra-simple-authentication"
   s.require_paths = ["lib"]
   s.platform      = Gem::Platform::RUBY
 

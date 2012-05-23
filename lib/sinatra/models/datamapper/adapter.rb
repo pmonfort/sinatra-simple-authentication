@@ -2,7 +2,10 @@ require File.join(File.expand_path("../../common", __FILE__), 'instance_methods'
 
 module DataMapper
   module Adapter
+    class << self; attr_accessor :model_class; end
+
     def self.included(base)
+      self.model_class = base
       base.extend ClassMethods
       base.class_eval do
         base.property :id,               DataMapper::Property::Serial

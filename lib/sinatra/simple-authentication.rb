@@ -21,7 +21,7 @@ module Sinatra
 
       def current_user
         if !!session[:user]
-          User.first(:id => session[:user])
+          SimpleAuthentication.model_class.first(:id => session[:user])
         else
           return false
         end
@@ -44,21 +44,21 @@ module Sinatra
     end
 
     class << self
-      attr_accessor \
-        :use_password_confirmation,
-        :max_password_length,
-        :min_password_length,
-        :taken_email_message,
-        :missing_email_message,
-        :invalid_email_message,
-        :missing_password_message,
-        :short_password_message,
-        :long_password_message,
-        :missing_password_confirmation_message,
-        :password_confirmation_dont_match_password_message,
-        :login_wrong_email_message,
-        :login_wrong_password_message,
-        :login_successful
+      attr_accessor :model_class,
+                    :use_password_confirmation,
+                    :max_password_length,
+                    :min_password_length,
+                    :taken_email_message,
+                    :missing_email_message,
+                    :invalid_email_message,
+                    :missing_password_message,
+                    :short_password_message,
+                    :long_password_message,
+                    :missing_password_confirmation_message,
+                    :password_confirmation_dont_match_password_message,
+                    :login_wrong_email_message,
+                    :login_wrong_password_message,
+                    :login_successful
     end
 
     def self.configure(&block)
@@ -66,9 +66,12 @@ module Sinatra
     end
 
     def self.registered(app)
-      require_relative 'models/user_loader'
+      #load_user_class will set the corresponding model class
+      self.model_class = self.load_user_class
+      require "ruby-debug"; debugger; ""
       app.helpers SimpleAuthentication::Helpers
 
+      #Set costum variables
       app.set :use_password_confirmation, use_password_confirmation.nil? ? true : use_password_confirmation
       app.set :min_password_length, min_password_length.nil? ? 4 : min_password_length
       app.set :max_password_length, max_password_length.nil? ? 16 : max_password_length
@@ -100,12 +103,12 @@ module Sinatra
       app.set :sinatra_authentication_view_path, File.expand_path('../views/', __FILE__)
       app.enable :sessions
 
-      User.settings = app.settings
-      User.set_validation_rules
+      model_class.settings = app.settings
+      model_class.set_validation_rules
 
       app.get "/signup" do
         @password_confirmation = settings.use_password_confirmation
-        @user = User.new
+        @user = SimpleAuthentication.model_class.new
         @actionUrl = ""
 
         #Try to load an user view otherwise load the default
@@ -117,7 +120,7 @@ module Sinatra
       end
 
       app.post "/signup" do
-        @user = User.new
+        @user = SimpleAuthentication.model_class.new
         @user.email = params[:email]
         @user.password = params[:password]
         @user.password_confirmation = params[:password_confirmation]
@@ -134,7 +137,7 @@ module Sinatra
             end
           end
 
-          #Try to load an user view otherwise load the default
+          #Try to load a local user view otherwise load the default
           begin
             haml :"/signup"
           rescue
@@ -147,7 +150,7 @@ module Sinatra
         if !!session[:user]
           redirect '/'
         else
-          #Try to load an user view otherwise load the default
+          #Try to load a local user view otherwise load the default
           begin
             haml :"/login"
           rescue
@@ -157,7 +160,8 @@ module Sinatra
       end
 
       app.post "/login" do
-        if user = User.first(:email => params[:email])
+
+        if user = SimpleAuthentication.model_class.first(:email => params[:email])
           if user.authenticate(params[:password])
             session[:user] = user.id
             if Rack.const_defined?('Flash')
@@ -188,6 +192,26 @@ module Sinatra
         session[:user] = nil
         redirect '/'
       end
+    end
+
+    def self.load_user_class
+      current_path = File.expand_path("..", __FILE__)
+
+      if Object.const_defined?("DataMapper")
+        orm_directory_name = 'datamapper'
+        base_module = DataMapper
+      elsif Object.const_defined?("ActiveRecord")
+        orm_directory_name = 'active_record'
+        base_module = ActiveRecord
+      end
+
+      require File.join(current_path, "models/#{orm_directory_name}/adapter")
+
+      if !base_module::Adapter.model_class
+        require File.join(current_path, "models/#{orm_directory_name}/user")
+      end
+
+      model_class = base_module::Adapter.model_class
     end
   end
 end

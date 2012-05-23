@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'active_record'
 require 'digest'
-require File.join(File.expand_path("..", __FILE__), 'adapter')
 
 unless ActiveRecord::Base.connection.table_exists?("users")
   class CreateUsers < ActiveRecord::Migration
@@ -25,6 +24,6 @@ unless ActiveRecord::Base.connection.table_exists?("users")
   CreateUsers.up
 end
 
-class User < ActiveRecord::Base
+class ArUser < ActiveRecord::Base
   include ActiveRecord::Adapter
 end
