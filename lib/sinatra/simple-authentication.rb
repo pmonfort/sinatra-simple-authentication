@@ -203,6 +203,8 @@ module Sinatra
       elsif Object.const_defined?("ActiveRecord")
         orm_directory_name = 'active_record'
         base_module = ActiveRecord
+      else
+        throw "Not DataMapper nor ActiveRecord connection detected."
       end
 
       require File.join(current_path, "models/#{orm_directory_name}/adapter")
