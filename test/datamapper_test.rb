@@ -23,7 +23,7 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
   end
 
   def teardown
-    User.all.destroy
+    Sinatra::SimpleAuthentication::Controllers::Session.model_class.all.destroy
   end
 
   def test_signup_page
@@ -56,7 +56,7 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     password_confirmation_dont_match_password = "Password confirmation don't match password."
 
     #Empty user
-    user = User.new
+    user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
 
     assert !user.save
     assert user.errors[:email].include?(missing_email)
@@ -65,7 +65,7 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Short password
-    user = User.new
+    user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
     user.password = "X" * 3
 
     assert !user.save
@@ -74,7 +74,7 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Long password
-    user = User.new
+    user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
     user.password = "X" * 17
 
     assert !user.save
@@ -83,7 +83,7 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Wrong format email
-    user = User.new
+    user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
     user.email = "InvaidEmailFormat"
 
     assert !user.save
@@ -93,14 +93,14 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Valid user
-    user = User.new
+    user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
     user.email = "test@mail.com"
     user.password = "PASSWORD"
     user.password_confirmation = "PASSWORD"
     assert user.save
 
-    #User duplicated email
-    user = User.new
+    #user_class duplicated email
+    user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
     user.email = "test@mail.com"
     user.password = "PASSWORD"
     user.password_confirmation = "PASSWORD"

@@ -6,9 +6,17 @@ require 'dm-validations'
 require 'dm-migrations'
 require 'digest'
 
-class DmUser
-  include DataMapper::Resource
-  include DataMapper::Adapter
-end
+module Sinatra
+  module SimpleAuthentication
+    module Models
+      module DataMapper
+        class DmUser
+          include ::DataMapper::Resource
+          include Adapter
+        end
 
-DmUser.auto_upgrade!
+        DmUser.auto_upgrade!
+      end
+    end
+  end
+end

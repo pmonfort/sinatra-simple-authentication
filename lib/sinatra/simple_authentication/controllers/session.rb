@@ -113,16 +113,16 @@ module Sinatra
 
         def self.load_user_class
           if Object.const_defined?("DataMapper")
-            orm_directory_name = 'datamapper'
-            base_module = DataMapper
+            orm_directory_name = "datamapper"
+            require File.join(self.base_path, "models/datamapper/adapter")
+            base_module = Sinatra::SimpleAuthentication::Models::DataMapper
           elsif Object.const_defined?("ActiveRecord")
-            orm_directory_name = 'active_record'
-            base_module = ActiveRecord
+            orm_directory_name = "active_record"
+            require File.join(self.base_path, "models/active_record/adapter")
+            base_module = Sinatra::SimpleAuthentication::Models::ActiveRecord
           else
             throw "Not DataMapper nor ActiveRecord connection detected."
           end
-
-          require File.join(self.base_path, "models/#{orm_directory_name}/adapter")
 
           if !base_module::Adapter.model_class
             require File.join(self.base_path, "models/#{orm_directory_name}/user")

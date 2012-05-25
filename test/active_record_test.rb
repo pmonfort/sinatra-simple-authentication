@@ -9,7 +9,7 @@ require 'nokogiri'
 module Sinatra
   class Base
     set :environment, :test
-    ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => "#{Dir.pwd}/test.db")
+    ::ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => "#{Dir.pwd}/test.db")
     register Sinatra::SimpleAuthentication
   end
 end
@@ -22,7 +22,7 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
   end
 
   def teardown
-    User.delete_all
+    Sinatra::SimpleAuthentication::Controllers::Session.model_class.delete_all
   end
 
   def test_signup_page
@@ -55,7 +55,7 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     password_confirmation_dont_match_password = "Password confirmation don't match password."
 
     #Empty user
-    user = User.new
+    user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
 
     assert !user.save
     assert user.errors[:email].include?(missing_email)
@@ -64,7 +64,7 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Short password
-    user = User.new
+    user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
     user.password = "X" * 3
 
     assert !user.save
@@ -73,7 +73,7 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Long password
-    user = User.new
+    user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
     user.password = "X" * 17
 
     assert !user.save
@@ -82,7 +82,7 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Wrong format email
-    user = User.new
+    user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
     user.email = "InvaidEmailFormat"
 
     assert !user.save
@@ -92,14 +92,14 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Valid user
-    user = User.new
+    user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
     user.email = "test@mail.com"
     user.password = "PASSWORD"
     user.password_confirmation = "PASSWORD"
     assert user.save
 
-    #User duplicated email
-    user = User.new
+    #user_class duplicated email
+    user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
     user.email = "test@mail.com"
     user.password = "PASSWORD"
     user.password_confirmation = "PASSWORD"
