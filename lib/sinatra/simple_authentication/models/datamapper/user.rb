@@ -6,9 +6,9 @@ require 'dm-validations'
 require 'dm-migrations'
 require 'digest'
 
-class User
+class DmUser
   include DataMapper::Resource
   include DataMapper::Adapter
 end
 
-User.auto_upgrade!
+DmUser.auto_upgrade!

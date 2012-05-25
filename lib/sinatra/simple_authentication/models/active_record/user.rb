@@ -26,6 +26,6 @@ unless ActiveRecord::Base.connection.table_exists?("users")
   CreateUsers.up
 end
 
-class User < ActiveRecord::Base
+class ArUser < ActiveRecord::Base
   include ActiveRecord::Adapter
 end

@@ -30,7 +30,7 @@ class Index < Sinatra::Base
     c.login_successful = "Custom Login successful"
   end
 
-  register Sinatra::SimpleAuthentication::Controllers::Session
+  register Sinatra::SimpleAuthentication
 
   get '/' do
     login_required

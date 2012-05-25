@@ -8,5 +8,9 @@ module Sinatra
     def self.configure(&block)
       Sinatra::SimpleAuthentication::Controllers::Defaults.configure(&block)
     end
+
+    def self.registered(app)
+      Sinatra::SimpleAuthentication::Controllers::Session.registered(app)
+    end
   end
 end
