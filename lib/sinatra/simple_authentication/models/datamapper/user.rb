@@ -1,12 +1,14 @@
+# -*- coding: utf-8 -*-
+
 require 'rubygems'
 require 'dm-core'
 require 'dm-validations'
 require 'dm-migrations'
 require 'digest'
 
-class DmUser
+class User
   include DataMapper::Resource
   include DataMapper::Adapter
 end
 
-DmUser.auto_upgrade!
+User.auto_upgrade!

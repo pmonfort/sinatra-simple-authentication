@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 require 'rubygems'
 require 'sinatra/base'
 require 'dm-core'
@@ -28,7 +30,7 @@ class Index < Sinatra::Base
     c.login_successful = "Custom Login successful"
   end
 
-  register Sinatra::SimpleAuthentication
+  register Sinatra::SimpleAuthentication::Controllers::Session
 
   get '/' do
     login_required

@@ -29,18 +29,21 @@ Gem::Specification.new do |s|
   #s.rubyforge_project = "lorem"
 
   s.files = [
-      "lib/sinatra/models/user_loader.rb",
-      "lib/sinatra/models/datamapper/user.rb",
-      "lib/sinatra/models/datamapper/adapter.rb",
-      "lib/sinatra/models/active_record/user.rb",
-      "lib/sinatra/models/active_record/adapter.rb",
-      "lib/sinatra/models/common/instance_methods.rb",
-      "lib/sinatra/views/login.haml",
-      "lib/sinatra/views/signup.haml",
-      "lib/sinatra/views/_form.haml",
+      "lib/sinatra/simple_authentication/models/datamapper/user.rb",
+      "lib/sinatra/simple_authentication/models/datamapper/adapter.rb",
+      "lib/sinatra/simple_authentication/models/active_record/user.rb",
+      "lib/sinatra/simple_authentication/models/active_record/adapter.rb",
+      "lib/sinatra/simple_authentication/models/common/instance_methods.rb",
+      "lib/sinatra/simple_authentication/views/login.haml",
+      "lib/sinatra/simple_authentication/views/signup.haml",
+      "lib/sinatra/simple_authentication/views/_form.haml",
+      "lib/sinatra/simple_authentication/controllers/defaults.rb",
+      "lib/sinatra/simple_authentication/controllers/helpers.rb",
+      "lib/sinatra/simple_authentication/controllers/session.rb",
       "lib/sinatra/simple-authentication.rb"
     ]
 
-  s.test_files    = Dir.glob('test/simple_authentication_test.rb')
+  s.test_files    = Dir.glob('test/active_record_test.rb')
+  s.test_files    = Dir.glob('test/datamapper_test.rb')
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
 end

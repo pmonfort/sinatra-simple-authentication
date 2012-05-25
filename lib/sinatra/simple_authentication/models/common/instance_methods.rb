@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 module Common
   module InstanceMethods
     attr_accessor :password, :password_confirmation

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 require 'rubygems'
 require 'active_record'
 require 'digest'
@@ -24,6 +26,6 @@ unless ActiveRecord::Base.connection.table_exists?("users")
   CreateUsers.up
 end
 
-class ArUser < ActiveRecord::Base
+class User < ActiveRecord::Base
   include ActiveRecord::Adapter
 end
