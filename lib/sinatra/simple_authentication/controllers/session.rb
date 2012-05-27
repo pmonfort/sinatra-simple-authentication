@@ -39,9 +39,11 @@ module Sinatra
 
           app.post "/signup" do
             @user = Session.model_class.new
-            @user.email = params[:email]
-            @user.password = params[:password]
-            @user.password_confirmation = params[:password_confirmation]
+            #Support custom user models with differents attributs (But always have to receive email and password)
+            params.each do |k, v|
+              @user.respond_to?(k)
+              @user.send(k + "=", v)
+            end
 
             if @user.save
               redirect '/'
