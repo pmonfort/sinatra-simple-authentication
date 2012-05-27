@@ -9,9 +9,9 @@ require 'rack-flash'
 class Index < Sinatra::Base
   DataMapper::Logger.new($stdout, :debug)
   DataMapper.setup(:default, "sqlite://#{Dir.pwd}/example.db")
+  require File.join(File.dirname(__FILE__), "models", "user")
 
   use Rack::Flash, :sweep => true
-
   #Setup optional settings
   Sinatra::SimpleAuthentication.configure do |c|
     c.use_password_confirmation = false
