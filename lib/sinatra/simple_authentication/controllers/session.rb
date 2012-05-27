@@ -28,7 +28,6 @@ module Sinatra
             @password_confirmation = settings.use_password_confirmation
             @user = Session.model_class.new
             @actionUrl = ""
-
             #Try to load an user view otherwise load the default
             begin
               haml :"/signup"
@@ -56,7 +55,6 @@ module Sinatra
                   flash[:error] = @user.errors.to_a
                 end
               end
-
               #Try to load a local user view otherwise load the default
               begin
                 haml :"/signup"
@@ -80,7 +78,7 @@ module Sinatra
           end
 
           app.post "/login" do
-            if user = Session.model_class.first(:email => params[:email])
+            if user = Session.model_class.find_user(:email => params[:email])
               if user.authenticate(params[:password])
                 session[:user] = user.id
                 if Rack.const_defined?('Flash')

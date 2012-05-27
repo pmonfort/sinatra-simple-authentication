@@ -30,7 +30,7 @@ module Sinatra
           app.enable :sessions
 
           #Set costum variables
-          app.set :use_password_confirmation, use_password_confirmation.nil? ? true : use_password_confirmation
+          app.set :use_password_confirmation, use_password_confirmation.nil? ? false : use_password_confirmation
           app.set :min_password_length, min_password_length.nil? ? 4 : min_password_length
           app.set :max_password_length, max_password_length.nil? ? 16 : max_password_length
 

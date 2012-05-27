@@ -43,6 +43,10 @@ module Sinatra
                 validates_confirmation_of :password, :message => self.settings.error_messages[:password_confirmation_dont_match_password]
               end
             end
+
+            def find_user(params)
+              self.first(params)
+            end
           end
 
           module InstanceMethods

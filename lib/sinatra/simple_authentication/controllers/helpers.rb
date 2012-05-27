@@ -20,7 +20,7 @@ module Sinatra
 
         def current_user
           if !!session[:user]
-            Session.model_class.first(:id => session[:user])
+            Session.model_class.find_user(:id => session[:user])
           else
             return false
           end
