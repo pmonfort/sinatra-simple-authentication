@@ -15,8 +15,9 @@ class User
   property :first_name, DataMapper::Property::String
   property :last_name, DataMapper::Property::String
 
+  validates_presence_of :first_name, :message => "Missing First name"
   validates_uniqueness_of :first_name, :scope => :last_name,
-    :message => "Custom validation - There's already a user with that first name and last name"
+    :message => "There's already a user with that first name and last name"
 end
 
 User.auto_upgrade!

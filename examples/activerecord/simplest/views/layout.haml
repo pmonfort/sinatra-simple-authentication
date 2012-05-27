@@ -1,0 +1,18 @@
+!!!
+%html
+  %head
+  %body
+    - if Rack.const_defined?('Flash')
+      -if flash[:error]
+        .errors
+          - flash[:error].each do |error|
+            %span
+              = error
+            %br
+      -if flash[:notice]
+        .notices
+          - flash[:notice].each do |notice|
+            %span
+              = notice
+            %br
+    = yield

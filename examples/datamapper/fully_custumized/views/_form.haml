@@ -1,0 +1,26 @@
+%form{:action => 'signup', :method => "post", :enctype => "multipart/form-data"}
+  %fieldset
+    %table
+      %tbody
+        %tr
+          %td
+            %label{:for => "email"} Email:
+            %input{:type => "text", :name => "email", :class => "text", :value => @user[:email]}
+        %tr
+          %td
+            %label{:for => "password"} Password:
+            %input{:type => "password", :name => "password", :class => "text", :value => @user[:password]}
+        - if @password_confirmation
+          %tr
+            %td
+              %label{:for => "password_confirmation"} Password confirmation:
+              %input{:type => "password", :name => "password_confirmation", :class => "text"}
+        %tr
+          %td
+            %label{:for => "first_name"} First name:
+            %input{:type => "text", :name => "first_name", :class => "text", :value => @user[:first_name]}
+        %tr
+          %td
+            %label{:for => "email"} Last name:
+            %input{:type => "text", :name => "last_name", :class => "text", :value => @user[:last_name]}
+    %input{:type => "submit", :value => "Send", :class => "button"}

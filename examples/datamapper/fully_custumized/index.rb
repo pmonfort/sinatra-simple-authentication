@@ -14,7 +14,7 @@ class Index < Sinatra::Base
   use Rack::Flash, :sweep => true
   #Setup optional settings
   Sinatra::SimpleAuthentication.configure do |c|
-    c.use_password_confirmation = false
+    c.use_password_confirmation = true
     c.min_password_length = 4
     c.max_password_length = 16
     c.taken_email_message = "Custom taken email"

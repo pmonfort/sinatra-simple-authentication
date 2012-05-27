@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
 gem 'haml'
-gem 'dm-core'
-gem 'dm-sqlite-adapter'
+gem 'activerecord', '~> 3.2.3'
+gem 'sqlite3'
 gem 'sinatra'
 gem 'sinatra-simple-authentication'
-gem "rack-flash3", "~> 1.0.1"
+gem 'rack-flash3', '~> 1.0.1'
