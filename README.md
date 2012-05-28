@@ -16,7 +16,7 @@ Or install it yourself as:
 
 ## Usage
 
-Require sinatra-simple-authentication and setup your database connection then register Sinatra::SimpleAuthentication
+Require sinatra-simple-authentication and setup your database connection then register Sinatra::SimpleAuthentication:
 
 ```ruby
 require 'sinatra/simple-authentication'
@@ -36,8 +36,8 @@ end
 
 ## Custom options
 
-* Password confirmation <br /> 
-  Set to true if need to you password confirmation
+* Password confirmation <br />
+  If you want password confirmation set this to true
 
 * Min password length <br /> 
   Set to change the default min length (4)
@@ -54,7 +54,7 @@ end
     </tr>
     <tr>
         <td>taken_email_message</td>
-        <td>Email is already been taken.</td>
+        <td>Email has already been taken.</td>
     </tr>
     <tr>
         <td>missing_email_message</td>
@@ -70,11 +70,11 @@ end
     </tr>
     <tr>
         <td>short_password_message</td>
-        <td>Password is too short, must be between X and X characters long.</td>
+        <td>Password is too short, must be between X and Y characters long.</td>
     </tr>
     <tr>
         <td>long_password_message</td>
-        <td>Password is too long, must be between X and X characters long.</td>
+        <td>Password is too long, must be between X and Y characters long.</td>
     </tr>
     <tr>
         <td>missing_password_confirmation_message</td>
@@ -82,15 +82,15 @@ end
     </tr>
     <tr>
         <td>password_confirmation_dont_match_password_message</td>
-        <td>Password confirmation don't match password.</td>
+        <td>Password confirmation doesn't match password.</td>
     </tr>
     <tr>
         <td>login_wrong_email_message </td>
-        <td>The email you entered is incorrect.</td>
+        <td>Wrong email address.</td>
     </tr>
     <tr>
         <td>login_wrong_password_message</td>
-        <td>The password you entered is incorrect.</td>
+        <td>Wrong password.</td>
     </tr>
     <tr>
         <td>login_successful_message</td>
@@ -111,7 +111,7 @@ end
       c.short_password_message = "Custom short password"
       c.long_password_message = "Custom long password"
       c.missing_password_confirmation_message = "Custom missing password confirmation"
-      c.password_confirmation_dont_match_password_message = "Custom don't match password and confirmation"
+      c.password_confirmation_dont_match_password_message = "Custom doesn't match password and confirmation"
       c.login_wrong_email_message = "Custom wrong email"
       c.login_wrong_password_message = "Custom wrong password"
       c.login_successful_message = "Custom Login successful"
@@ -143,7 +143,7 @@ end
 
 ## Flash messages
 
-Place this before register sinatra-simple-authentication
+Place this before register sinatra-simple-authentication:
 
 ```ruby
 require 'rack-flash'
@@ -156,7 +156,7 @@ The error and notice messages will be available through flash[:error] and flash[
 
 ## Override default views
 
-Default views
+Default views:
 * signup.haml
 * login.haml
 
@@ -167,7 +167,7 @@ Example: /myapp/views/signup.haml
 
 ## Override default model
 
-On your custom model you need to require 'sinatra/simple-authentication' and you must include the following code on your model class
+In your model you need to require 'sinatra/simple-authentication' and you must include the following code:
 
 ```ruby
 
@@ -178,7 +178,7 @@ include Sinatra::SimpleAuthentication::Models::DataMapper::Adapter
 
 Require your model class before register sinatra-simple-authentication.
 
-For ActiveRecords you would most 3 basic attributes strings email, hashed_password and salt.
+For ActiveRecord you need to add email, hashed_password and salt attributes.
 
 Example:
 
@@ -197,7 +197,6 @@ unless ::ActiveRecord::Base.connection.table_exists?("users")
     end
 
     def self.down
-      remove_index :users, :email
       drop_table :users
     end
   end
