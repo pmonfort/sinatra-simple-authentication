@@ -4,10 +4,10 @@ $:.push File.expand_path("../lib", __FILE__)
 Gem::Specification.new do |s|
 
   s.name          = "sinatra-simple-authentication"
-  s.version       = "0.0.1"
+  s.version       = "1.0.0"
   s.authors       = ["Pablo Monfort"]
   s.email         = ["pmonfort@gmail.com"]
-  s.description   = %q{Simple authentication plugin for sinatra.}
+  s.description   = %q{Basic authentication gem with support for Datamapper and ActiveRecord.}
   s.summary       = %q{Simple authentication plugin for sinatra.}
   s.homepage      = "https://github.com/pmonfort/sinatra-simple-authentication"
   s.require_paths = ["lib"]
@@ -41,7 +41,5 @@ Gem::Specification.new do |s|
       "lib/sinatra/simple-authentication.rb"
     ]
 
-  s.test_files    = Dir.glob('test/active_record_test.rb')
-  s.test_files    = Dir.glob('test/datamapper_test.rb')
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.test_files    = Dir.glob('test/tc_*.rb')
 end
