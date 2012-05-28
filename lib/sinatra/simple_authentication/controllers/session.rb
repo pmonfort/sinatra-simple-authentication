@@ -52,7 +52,7 @@ module Sinatra
                 if Object.const_defined?("DataMapper")
                   flash[:error] = @user.errors.full_messages
                 else
-                  flash[:error] = @user.errors.to_a
+                  flash[:error] = @user.errors.map {|i, m| m}
                 end
               end
               #Try to load a local user view otherwise load the default
