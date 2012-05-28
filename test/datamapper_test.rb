@@ -52,8 +52,6 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     missing_password = "Password can't be blank."
     short_password = "Password is too short, must be between 4 and 16 characters long."
     long_password = "Password is too long, must be between 4 and 16 characters long."
-    missing_password_confirmation = "Password confirmation can't be blank."
-    password_confirmation_dont_match_password = "Password confirmation don't match password."
 
     #Empty user
     user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
@@ -62,7 +60,6 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     assert user.errors[:email].include?(missing_email)
     assert user.errors[:password].include?(missing_password)
     assert user.errors[:password].include?(short_password)
-    assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Short password
     user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
@@ -71,7 +68,6 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     assert !user.save
     assert user.errors[:email].include?(missing_email)
     assert user.errors[:password].include?(short_password)
-    assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Long password
     user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
@@ -80,7 +76,6 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     assert !user.save
     assert user.errors[:email].include?(missing_email)
     assert user.errors[:password].include?(long_password)
-    assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Wrong format email
     user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
@@ -90,7 +85,6 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
     assert user.errors[:email].include?(invalid_email)
     assert user.errors[:password].include?(missing_password)
     assert user.errors[:password].include?(short_password)
-    assert user.errors[:password_confirmation].include?(missing_password_confirmation)
 
     #Valid user
     user = Sinatra::SimpleAuthentication::Controllers::Session.model_class.new
