@@ -45,9 +45,9 @@ class SimpleAuthenticationTest < Test::Unit::TestCase
   end
 
   def test_user_validations
-    taken_email = "Email is already been taken."
+    taken_email = "Email has already been taken."
     missing_email = "Email can't be blank."
-    invalid_email = "Email invalid format."
+    invalid_email = "Invalid email format."
     missing_password = "Password can't be blank."
     short_password = "Password is too short, must be between 4 and 16 characters long."
     long_password = "Password is too long, must be between 4 and 16 characters long."

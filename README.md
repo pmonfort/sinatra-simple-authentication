@@ -39,10 +39,10 @@ end
 * Password confirmation <br />
   If you want password confirmation set this to true
 
-* Min password length <br /> 
+* Min password length <br />
   Set to change the default min length (4)
 
-* Max password length <br /> 
+* Max password length <br />
   Set to change the default max length (16)
 
 * Change default messages
@@ -62,7 +62,7 @@ end
     </tr>
     <tr>
         <td>invalid_email_message</td>
-        <td>Email invalid format.</td>
+        <td>Invalid email format.</td>
     </tr>
     <tr>
         <td>missing_password_message</td>
@@ -127,7 +127,7 @@ end
 
 
 ## Helpers
-  
+
 * login_required (placed at the begining of a route, will check if there's a logged in user otherwise will redirect to /login)
 
 * logged_in?

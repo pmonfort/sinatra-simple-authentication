@@ -34,19 +34,19 @@ module Sinatra
           app.set :min_password_length, min_password_length.nil? ? 4 : min_password_length
           app.set :max_password_length, max_password_length.nil? ? 16 : max_password_length
 
-          app.set :login_wrong_email_message, login_wrong_email_message.nil? ? "The email you entered is incorrect." : login_wrong_email_message
-          app.set :login_wrong_password_message, login_wrong_password_message.nil? ? "The password you entered is incorrect." : login_wrong_password_message
+          app.set :login_wrong_email_message, login_wrong_email_message.nil? ? "Wrong email address." : login_wrong_email_message
+          app.set :login_wrong_password_message, login_wrong_password_message.nil? ? "Wrong password." : login_wrong_password_message
           app.set :login_successful_message, login_successful_message.nil? ? "Login successful." : login_successful_message
 
           #Validations errors messages
-          taken_email = taken_email_message.nil? ? "Email is already been taken." : taken_email_message
+          taken_email = taken_email_message.nil? ? "Email has already been taken." : taken_email_message
           missing_email = missing_email_message.nil? ? "Email can't be blank." : missing_email_message
-          invalid_email = invalid_email_message.nil? ? "Email invalid format." : invalid_email_message
+          invalid_email = invalid_email_message.nil? ? "Invalid email format." : invalid_email_message
           missing_password = missing_password_message.nil? ? "Password can't be blank." : missing_password_message
           short_password = short_password_message.nil? ? "Password is too short, must be between #{app.settings.min_password_length} and #{app.settings.max_password_length} characters long." : short_password_message
           long_password = long_password_message.nil? ? "Password is too long, must be between #{app.settings.min_password_length} and #{app.settings.max_password_length} characters long." : long_password_message
           missing_password_confirmation = missing_password_confirmation_message.nil? ? "Password confirmation can't be blank." : missing_password_confirmation_message
-          password_confirmation_dont_match_password = password_confirmation_dont_match_password_message.nil? ? "Password confirmation don't match password." : password_confirmation_dont_match_password_message
+          password_confirmation_dont_match_password = password_confirmation_dont_match_password_message.nil? ? "Password confirmation doesn't match password." : password_confirmation_dont_match_password_message
 
           app.set :error_messages, { :missing_email => missing_email,
             :taken_email => taken_email,
@@ -58,7 +58,7 @@ module Sinatra
             :password_confirmation_dont_match_password => password_confirmation_dont_match_password
           }
 
-          return app
+          app
         end
       end
     end
