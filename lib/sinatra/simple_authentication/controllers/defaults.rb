@@ -18,7 +18,7 @@ module Sinatra
                         :password_confirmation_dont_match_password_message,
                         :login_wrong_email_message,
                         :login_wrong_password_message,
-                        :login_successful
+                        :login_successful_message
         end
 
         def self.configure(&block)
@@ -36,7 +36,7 @@ module Sinatra
 
           app.set :login_wrong_email_message, login_wrong_email_message.nil? ? "The email you entered is incorrect." : login_wrong_email_message
           app.set :login_wrong_password_message, login_wrong_password_message.nil? ? "The password you entered is incorrect." : login_wrong_password_message
-          app.set :login_successful, login_successful.nil? ? "Login successful." : login_successful
+          app.set :login_successful_message, login_successful_message.nil? ? "Login successful." : login_successful_message
 
           #Validations errors messages
           taken_email = taken_email_message.nil? ? "Email is already been taken." : taken_email_message

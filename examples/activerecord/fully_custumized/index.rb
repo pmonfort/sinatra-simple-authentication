@@ -26,7 +26,7 @@ class Index < Sinatra::Base
     c.password_confirmation_dont_match_password_message = "Custom don't match password and confirmation"
     c.login_wrong_email_message = "Custom wrong email"
     c.login_wrong_password_message = "Custom wrong password"
-    c.login_successful = "Custom Login successful"
+    c.login_successful_message = "Custom Login successful"
   end
 
   register Sinatra::SimpleAuthentication

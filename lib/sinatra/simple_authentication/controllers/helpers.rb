@@ -4,10 +4,6 @@ module Sinatra
   module SimpleAuthentication
     module Controllers
       module Helpers
-        def hash_to_query_string(hash)
-          hash.collect {|k,v| "#{k}=#{v}"}.join('&')
-        end
-
         def login_required
           if !!current_user
             return true

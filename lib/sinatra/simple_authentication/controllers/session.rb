@@ -82,7 +82,7 @@ module Sinatra
               if user.authenticate(params[:password])
                 session[:user] = user.id
                 if Rack.const_defined?('Flash')
-                  flash[:notice] = [app.settings.login_successful]
+                  flash[:notice] = [app.settings.login_successful_message]
                 end
 
                 if !!session[:return_to]
