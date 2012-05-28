@@ -49,8 +49,8 @@ end
 
   <table>
     <tr>
-        <td>MESSAGES</td>
-        <td>DEFAULT</td>
+        <td>OPTIONS</td>
+        <td>DEFAULT MESSAGES</td>
     </tr>
     <tr>
         <td>taken_email_message</td>
