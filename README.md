@@ -37,36 +37,74 @@ end
 
 ## Custom options
 
-* Password confirmation
+* Password confirmation <br /> 
   Set to true if need to you password confirmation
 
-* Min password length
-  Set to change the default min length(4)
+* Min password length <br /> 
+  Set to change the default min length (4)
 
-* Max password length
-  Set to change the default max length(16)
+* Max password length <br /> 
+  Set to change the default max length (16)
 
 * Change default messages
 
-  MESSAGES                                          | DEFAULT
-  taken_email_message                               | Email is already been taken.
-  missing_email_message                             | Email can't be blank.
-  invalid_email_message                             | Email invalid format.
-  missing_password_message                          | Password can't be blank.
-  short_password_message                            | Password is too short, must be between X and X characters long.
-  long_password_message                             | Password is too long, must be between X and X characters long.
-  missing_password_confirmation_message             | Password confirmation can't be blank.
-  password_confirmation_dont_match_password_message | Password confirmation don't match password.
-  login_wrong_email_message                         | The email you entered is incorrect.
-  login_wrong_password_message                      | The password you entered is incorrect.
-  login_successful_message                          | Login successful.
+  <table>
+    <tr>
+        <td>MESSAGES</td>
+        <td>DEFAULT</td>
+    </tr>
+    <tr>
+        <td>taken_email_message</td>
+        <td>Email is already been taken.</td>
+    </tr>
+    <tr>
+        <td>missing_email_message</td>
+        <td>Email can't be blank.</td>
+    </tr>
+    <tr>
+        <td>invalid_email_message</td>
+        <td>Email invalid format.</td>
+    </tr>
+    <tr>
+        <td>missing_password_message</td>
+        <td>Password can't be blank.</td>
+    </tr>
+    <tr>
+        <td>short_password_message</td>
+        <td>Password is too short, must be between X and X characters long.</td>
+    </tr>
+    <tr>
+        <td>long_password_message</td>
+        <td>Password is too long, must be between X and X characters long.</td>
+    </tr>
+    <tr>
+        <td>missing_password_confirmation_message</td>
+        <td>Password confirmation can't be blank.</td>
+    </tr>
+    <tr>
+        <td>password_confirmation_dont_match_password_message</td>
+        <td>Password confirmation don't match password.</td>
+    </tr>
+    <tr>
+        <td>login_wrong_email_message </td>
+        <td>The email you entered is incorrect.</td>
+    </tr>
+    <tr>
+        <td>login_wrong_password_message</td>
+        <td>The password you entered is incorrect.</td>
+    </tr>
+    <tr>
+        <td>login_successful_message</td>
+        <td>Login successful.</td>
+    </tr>
+  </table>
 
-  Example
+  Example:
   ```ruby
     Sinatra::SimpleAuthentication.configure do |c|
       c.use_password_confirmation = true
-      c.min_password_length = 4
-      c.max_password_length = 16
+      c.min_password_length = 6
+      c.max_password_length = 20
       c.taken_email_message = "Custom taken email"
       c.missing_email_message = "Custom missing email"
       c.invalid_email_message = "Custom invalid email"
@@ -90,13 +128,12 @@ end
 
 
 ## Helpers
+  
+* login_required (placed at the begining of a route, will check if there's a logged in user otherwise will redirect to /login)
 
-Placed at the begining of a route, will check if there's a logged in user otherwise will redirect to /login
-login_required
+* logged_in?
 
-logged_in?
-
-current_user
+* current_user
 
 
 ## Requirements
@@ -108,6 +145,7 @@ current_user
 ## Flash messages
 
 Place this before register sinatra-simple-authentication
+
 ```ruby
 require 'rack-flash'
 
@@ -123,14 +161,14 @@ Default views
 * signup.haml
 * login.haml
 
-To override them you only need to place the file with the same name on yours /views folder
+To override them you only need to place the file with the same name on yours /views folder.
+
 Example: /myapp/views/signup.haml
 
 
 ## Override default model
 
-On your custom model you need to require 'sinatra/simple-authentication'
-and you must include the following code on your model class
+On your custom model you need to require 'sinatra/simple-authentication' and you must include the following code on your model class
 
 ```ruby
 
@@ -139,12 +177,11 @@ Sinatra::SimpleAuthentication.require_adapter
 include Sinatra::SimpleAuthentication::Models::DataMapper::Adapter
 ```
 
-Require your model class before register sinatra-simple-authentication
+Require your model class before register sinatra-simple-authentication.
 
-Note:
+For ActiveRecords you would most 3 basic attributes strings email, hashed_password and salt.
 
-For ActiveRecords you would must 3 basic attributes strings email, hashed_password and salt
-Example
+Example:
 
 ```ruby
 unless ::ActiveRecord::Base.connection.table_exists?("users")
@@ -155,8 +192,6 @@ unless ::ActiveRecord::Base.connection.table_exists?("users")
         t.string :email
         t.string :hashed_password
         t.string :salt
-
-
       end
 
       add_index :users, :email, :unique => true
