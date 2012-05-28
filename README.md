@@ -16,8 +16,7 @@ Or install it yourself as:
 
 ## Usage
 
-Require sinatra-simple-authentication, setup your database connection
-then register Sinatra::SimpleAuthentication
+Require sinatra-simple-authentication and setup your database connection then register Sinatra::SimpleAuthentication
 
 ```ruby
 require 'sinatra/simple-authentication'
