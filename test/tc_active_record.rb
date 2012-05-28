@@ -14,7 +14,7 @@ module Sinatra
   end
 end
 
-class SimpleAuthenticationTest < Test::Unit::TestCase
+class TcActiveRecord < Test::Unit::TestCase
   include Rack::Test::Methods
 
   def app

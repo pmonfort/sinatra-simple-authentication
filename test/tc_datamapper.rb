@@ -15,7 +15,7 @@ module Sinatra
   end
 end
 
-class SimpleAuthenticationTest < Test::Unit::TestCase
+class TcDataMapper < Test::Unit::TestCase
   include Rack::Test::Methods
 
   def app
