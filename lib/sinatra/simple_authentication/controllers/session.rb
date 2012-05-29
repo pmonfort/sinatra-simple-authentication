@@ -30,7 +30,7 @@ module Sinatra
             @actionUrl = ""
             #Try to load an user view otherwise load the default
             begin
-              haml :"/signup"
+              haml :"#{settings.views_base_path}/signup"
             rescue
               haml get_view_as_string("signup.haml")
             end
@@ -57,7 +57,7 @@ module Sinatra
               end
               #Try to load a local user view otherwise load the default
               begin
-                haml :"/signup"
+                haml :"#{settings.views_base_path}/signup"
               rescue
                 haml get_view_as_string("signup.haml")
               end
@@ -70,7 +70,7 @@ module Sinatra
             else
               #Try to load a local user view otherwise load the default
               begin
-                haml :"/login"
+                haml :"#{settings.views_base_path}/login"
               rescue
                 haml get_view_as_string("login.haml")
               end

@@ -45,6 +45,10 @@ end
 * Max password length <br />
   Set to change the default max length (16)
 
+* Views base path <br />
+  sinatra-simple-authentication will search for custom views on /views, set views_base_path option to change it <br />
+  example: views_base_path => "/session" you would place your files on /views/session
+
 * Change default messages
 
   <table>

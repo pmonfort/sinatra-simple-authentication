@@ -18,7 +18,8 @@ module Sinatra
                         :password_confirmation_dont_match_password_message,
                         :login_wrong_email_message,
                         :login_wrong_password_message,
-                        :login_successful_message
+                        :login_successful_message,
+                        :views_base_path
         end
 
         def self.configure(&block)
@@ -33,6 +34,7 @@ module Sinatra
           app.set :use_password_confirmation, use_password_confirmation.nil? ? false : use_password_confirmation
           app.set :min_password_length, min_password_length.nil? ? 4 : min_password_length
           app.set :max_password_length, max_password_length.nil? ? 16 : max_password_length
+          app.set :views_base_path, views_base_path.nil? ? "" : views_base_path
 
           app.set :login_wrong_email_message, login_wrong_email_message.nil? ? "Wrong email address." : login_wrong_email_message
           app.set :login_wrong_password_message, login_wrong_password_message.nil? ? "Wrong password." : login_wrong_password_message
